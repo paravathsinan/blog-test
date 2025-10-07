@@ -8,6 +8,8 @@ class User(AbstractUser):
     
     email = models.EmailField(max_length=254, unique=True, error_messages={'unique':'Email already exists'})
     phone = models.CharField(max_length=50, blank=True, null=True)
+    image = models.ImageField(upload_to='photo/', blank=True, null=True)
+    bio = models.TextField(blank=True, null=True)
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

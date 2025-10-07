@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Edit Profile{% endblock title %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-md mt-10">
+  <h2 class="text-3xl font-bold text-indigo-600 mb-6 text-center">Edit Your Profile 👤</h2>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="mb-4 text-sm text-{{ message.tags }}-600 bg-{{ message.tags }}-100 p-2 rounded">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <!-- ✅ Profile Image Preview Section -->
+  <div class="flex flex-col items-center mb-6">
+    {% if user.image %}
+      <img src="{{ user.image.url }}" alt="Profile Image" 
+           class="w-32 h-32 rounded-full object-cover border-4 border-indigo-500 shadow-md mb-3">
+    {% else %}
+      <div class="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center text-4xl text-gray-500 mb-3">
+        👤
+      </div>
+    {% endif %}
+    <p class="text-sm text-gray-500">Current Profile Picture</p>
+  </div>
+
+  <!-- ✅ Profile Form -->
+  <form method="POST" enctype="multipart/form-data" class="space-y-6">
+    {% csrf_token %}
+    {{ forms.as_p }}
+    
+    <!-- Submit Button -->
+    <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition">
+      Save Changes
+    </button>
+  </form>
+</div>
+{% endblock content %}

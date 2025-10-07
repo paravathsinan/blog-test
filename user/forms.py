@@ -14,3 +14,9 @@ class SignupForm(forms.ModelForm):
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError('This Email already exist!!')
         return email
+    
+class ProfileForm(forms.ModelForm):
+    
+    class Meta:
+        model = User
+        fields = ['phone','bio','image']

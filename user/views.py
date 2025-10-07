@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import SignupForm
+from .forms import SignupForm, ProfileForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -42,4 +42,19 @@ def login_views(request):
 def logout_views(request):
     logout(request)
     return redirect('index')
+
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Profile Updated!')
+            return redirect('profile')
+        else:
+            messages.error(request, 'Failed Profile Update!')
+            
+    form = ProfileForm(instance=request.user)
+    return render(request, 'user/profile.html', {'forms':form})
     
