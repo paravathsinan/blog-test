@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ blog.heading }}{% endblock title %}
+
+{% block content %}
+
+<div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-md mt-10 overflow-hidden">
+  <!-- Blog Image -->
+  <img src="{{ blog.image.url }}" alt="{{ blog.heading }}" class="w-full h-72 object-cover">
+
+  <!-- Blog Content -->
+  <div class="p-6 md:p-8">
+    <h1 class="text-3xl font-bold text-indigo-700 mb-4">{{ blog.heading }}</h1>
+    <p class="text-gray-700 leading-relaxed mb-6">{{ blog.content }}</p>
+
+    <div class="flex justify-between items-center border-t pt-4 text-sm text-gray-500">
+      <span>✍️ Author: <span class="font-medium text-gray-800">{{ blog.user }}</span></span>
+      <span>📅 Published: {{ blog.created_at|date:"M d, Y" }}</span>
+    </div>
+    {% if user == blog.user %}
+    <a href="{% url 'edit_post' blog.id %}" class="inline-block bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">Edit</a>
+    <a href="{% url 'delete' blog.id %}" class="inline-block bg-red-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-red-700 transition">delete</a>
+    {% endif %}
+
+    <!-- Back to Home Button -->
+    <div class="mt-6 text-center">
+      <a href="{% url 'index' %}" class="inline-block bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition">
+        ← Back to Home
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
